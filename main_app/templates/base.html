@@ -1,0 +1,54 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="https://static.www.nfl.com/image/upload/v1554321393/league/nvfr7ogywskqrfaiu38m.svg"
+    />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+
+    <title>fantasyfooty</title>
+    {% block head %} {% endblock %}
+  </head>
+  <body>
+    <header>
+      <div>
+        <a href="/">
+          <img
+            src="{% static 'images/nfl-logo-nfl-icon-transparent-free-png.webp' %}"
+            alt="NFL fantasy logo"
+            height="80"
+            width="80"
+          />
+        </a>
+      </div>
+      <nav>
+        <ul>
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'player-list' %}">All players</a></li>
+          <li><a href="{% url 'team-list' %}">All Teams</a></li>
+          <li><a href="{% url 'create-player' %}">Create a player</a></li>
+          <li><a href="{% url 'create-team' %}">Create a team</a></li>
+          <li><a href="{% url 'about' %}">About</a></li>
+
+          <li>
+            <form id="logout-form" method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button type="submit">Log out</button>
+            </form>
+          </li>
+          {% else %}
+          <li><a href="{% url 'home' %}">Login</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </header>
+    <main>{% block content %} {% endblock %}</main>
+  </body>
+</html>
