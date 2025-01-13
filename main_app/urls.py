@@ -5,5 +5,14 @@ urlpatterns = [
     path('', views.Home.as_view(), name='home'),
     path('about/', views.about, name='about'), # Change to class-based
     path('players/', views.Players.as_view(), name='players'),
-    
+    path('players/<int:player_id>/', views.player_detail, name='player-detail'),
+    path('players/create/', views.CreatePlayer.as_view(), name='create-player'),
+    path('players/<int:pk>/update/', views.PlayerUpdate.as_view(), name='player-update'),
+    path('players/<int:pk>/delete/', views.PlayerDelete.as_view(), name='player-delete'),
+    path('teams/create/', views.TeamCreate.as_view(), name='create-team'),
+    path('teams/<int:pk>/', views.TeamDetail.as_view(), name='team-detail'),
+    path('teams/', views.TeamList.as_view(), name='team-list'),
+    path('teams/<int:pk>/update/', views.TeamUpdate.as_view(), name='team-update'),
+    path('teams/<int:pk>/delete/', views.TeamDelete.as_view(), name='team-delete')
+
 ]
