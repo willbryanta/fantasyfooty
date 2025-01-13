@@ -44,6 +44,8 @@
             </form>
           </li>
           {% else %}
+
+          <li><a href="{% url 'players' %}">Players</a></li>
           <li><a href="{% url 'home' %}">Login</a></li>
           {% endif %}
         </ul>

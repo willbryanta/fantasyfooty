@@ -4,3 +4,8 @@ from django.contrib.auth.views import LoginView
 
 class Home(LoginView):
     template_name = 'home.html'
+
+# Change to class-based
+def about(req):
+    return render(req, 'about.html')
+
