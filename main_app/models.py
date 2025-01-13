@@ -28,6 +28,7 @@ class Player(models.Model):
     def get_absolute_url(self):
         return reverse("player-detail", kwargs={"pk": self.id})
     
+# TODO: Discuss further, may not need an owner model
 class Owner(models.Model):
     name = models.CharField(max_length=30)
     email = models.EmailField(max_length=30)
@@ -38,7 +39,7 @@ class Owner(models.Model):
     
     def get_absolute_url(self):
         return reverse("owner-detail", kwargs={"pk": self.id})
-    
+
 COLORS = (
     ('Bl', 'Black'),
     ('W', 'White'),
@@ -61,4 +62,6 @@ class Team(models.Model):
 
     def get_absolute_url(self):
         return reverse("team-detail", kwargs={"pk": self.id})
-    
+
+class Tournament(models.Model):
+    teams = models.ForeignKey(Team, on_delete=models.CASCADE)
