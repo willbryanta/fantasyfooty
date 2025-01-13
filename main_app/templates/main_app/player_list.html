@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% load static %} {% block head %}
+<link rel="stylesheet" href="{% static 'css/teams/team-index.css' %}" />
+{% endblock %} {% block content %}
+
+<section class="page-header">
+  <h1>All Teams</h1>
+  <img
+    src="https://i.pinimg.com/originals/5b/0f/5f/5b0f5f508504e143948a6d3595745206.png"
+    alt="owner profile-picture"
+  />
+</section>
+
+<section class="card-container">
+  {% for player in player_list %}
+  <div class="card" style="border-color: black">
+    <div class="card-bg" style="background-color: Aqua"></div>
+    <a href="{% url 'team-detail' team.id %}">
+      <div class="card-content">
+        <h2>{{ player.name }}</h2>
+      </div>
+    </a>
+  </div>
+  {% endfor %}
+</section>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {% load static %} {% block head %}
+<link rel="stylesheet" href="{% static 'css/players/player-detail.css' %}" />
+{% endblock %} {% block content %}
+
+<section class="player-container">
+  <div class="player-img"></div>
+  <div class="player-details">
+    <h1>{{ player.name }}</h1>
+    {% if player.age > 0 %}
+    <p>Position: {{ player.position }}</p>
+    <p>A {{ player.age }} years old</p>
+    <p>{{ player.years_played }} years of experience in the NFL</p>
+    <p>Plays for the {{ player.team }}</p>
+    {% else %}
+    <h4>Plays for the {{ player.team }}</h4>
+    {% endif %}
+
+    <div class="player-actions">
+      <a href="{% url 'player-update' player.id %}" class="btn warn">Edit</a>
+      <a href="{% url 'player-delete' player.id %}" class="btn warn">Delete</a>
+    </div>
+
+    <img src="{{ player.headshotURL }}" alt="player-headshot" />
+  </div>
+</section>
+
+{% endblock %}
