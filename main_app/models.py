@@ -64,4 +64,5 @@ class Team(models.Model):
         return reverse("team-detail", kwargs={"pk": self.id})
 
 class Tournament(models.Model):
+    name = models.CharField(max_length=30)
     teams = models.ForeignKey(Team, on_delete=models.CASCADE)

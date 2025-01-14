@@ -36,7 +36,6 @@
           <li><a href="{% url 'create-player' %}">Create a player</a></li>
           <li><a href="{% url 'create-team' %}">Create a team</a></li>
           <li><a href="{% url 'about' %}">About</a></li>
-
           <li>
             <form id="logout-form" method="post" action="{% url 'logout' %}">
               {% csrf_token %}
@@ -44,9 +43,10 @@
             </form>
           </li>
           {% else %}
-
           <li><a href="{% url 'players' %}">Players</a></li>
+          <li><a href="{% url 'about' %}">About</a></li>
           <li><a href="{% url 'home' %}">Login</a></li>
+          <li><a href="{% url 'signup' %}">Sign Up</a></li>
           {% endif %}
         </ul>
       </nav>
