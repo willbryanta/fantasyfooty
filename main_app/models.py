@@ -24,7 +24,7 @@ class Player(models.Model):
 
     def __str__(self):
         return self.name
-    
+
     def get_absolute_url(self):
         return reverse("player-detail", kwargs={"player_id": self.id})
     

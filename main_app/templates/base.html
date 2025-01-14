@@ -20,12 +20,7 @@
     <header>
       <div>
         <a href="/">
-          <img
-            src="{% static 'images/nfl-logo-nfl-icon-transparent-free-png.webp' %}"
-            alt="NFL fantasy logo"
-            height="80"
-            width="80"
-          />
+          <img src="" alt="" height="" width="" />
         </a>
       </div>
       <nav>
@@ -43,7 +38,7 @@
             </form>
           </li>
           {% else %}
-          <li><a href="{% url 'players' %}">Players</a></li>
+          <li><a href="{% url 'player-list' %}">Players</a></li>
           <li><a href="{% url 'about' %}">About</a></li>
           <li><a href="{% url 'home' %}">Login</a></li>
           <li><a href="{% url 'signup' %}">Sign Up</a></li>
