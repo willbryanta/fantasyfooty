@@ -26,7 +26,7 @@ class Player(models.Model):
         return self.name
     
     def get_absolute_url(self):
-        return reverse("player-detail", kwargs={"pk": self.id})
+        return reverse("player-detail", kwargs={"player_id": self.id})
     
 # TODO: Discuss further, may not need an owner model
 class Owner(models.Model):
