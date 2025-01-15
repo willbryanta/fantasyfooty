@@ -1,13 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.views import LoginView
-from .models import Player, Team, Tournament
+from .models import Player, Team, FantasyTeam
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
 from django.http import JsonResponse
-import requests
 
 #SECTION: Intro templates
 class Home(LoginView):
@@ -17,8 +16,7 @@ class Home(LoginView):
 def about(req):
     return render(req, 'about.html')
 
-# TODO: Will need to amend this once the API has been integrated
-
+#SECTION: Player routes
 @login_required
 def player_detail(req, player_id):
     player = Player.objects.get(id=player_id)
@@ -33,6 +31,7 @@ class CreatePlayer(CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+@login_required
 def player_list(req):
     players = Player.objects.all()
     return render(req, 'players/player_list.html', {'players': players})
@@ -63,6 +62,16 @@ class TeamUpdate(UpdateView):
 class TeamDelete(DeleteView):
     model = Team
     success_url = '/teams/'
+
+#SECTION: 
+@login_required
+def add_player_to_fantasy_team(req, player_id):
+    player = get_object_or_404(Player, id=player_id)
+    fantasy_team, created = FantasyTeam.objects.get_or_create(user=req.user)
+    if player not in fantasy_team.players.all():
+        fantasy_team.players.add(player)
+        return render(req, 'team/team.html',{"fantasy_team": fantasy_team.players })
+    return render(req, 'team/team.html',{"fantasy_team": fantasy_team.players})
 
 #SECTION: signup
 def signup(req):

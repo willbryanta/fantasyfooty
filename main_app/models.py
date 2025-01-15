@@ -2,17 +2,6 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 
-# TODO: Check with Foad whether the player instances should be initialised with the following or whether 
-
-# class Player(models.Model)
-#         def __init__(self, name, age, years_played, position, team, headshotURL):
-#             self.name = name
-#             self.age = age
-#             self.years_played = years_played
-#             self.position = position
-#             self.team = team
-#             self.headshotURL = headshotURL
-
 class Player(models.Model):
     name = models.CharField(max_length=50)
     age = models.IntegerField()
@@ -41,7 +30,7 @@ COLORS = (
     ('V', 'Violet')
 )
 
-# This is the team the players actually play for
+# E.g. Tampa Bay Buccaneers
 class Team(models.Model):
     name = models.CharField(max_length=20)
     state = models.CharField(max_length=30)
@@ -53,17 +42,10 @@ class Team(models.Model):
     def get_absolute_url(self):
         return reverse("team-detail", kwargs={"pk": self.id})
 
-# This is the fantasy team created and owned by a user, which should consist of players
-# class FantasyTeam(models.Model):
-#     name = models.CharField(max_length=30)
-#     players = models.ArrayField([models.ForeignKey(Player, on_delete=models.CASCADE)])
-
-#     def __str__(self):
-#         return f'{self.name}'
-
-class Tournament(models.Model):
-    name = models.CharField(max_length=30)
-    teams = models.ForeignKey(Team, on_delete=models.CASCADE)
+# This is the team that the user owns
+class FantasyTeam(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='fantasy_team')
+    players = models.ManyToManyField(Player, related_name='fantasy_teams')
 
     def __str__(self):
-        return f'{self.name}'
+        return f"{self.user.username}'s Fantasy Team"
