@@ -9,6 +9,7 @@ from django.contrib.auth import login
 from django.http import JsonResponse
 import requests
 
+#SECTION: Intro templates
 class Home(LoginView):
     template_name = 'home.html'
 
@@ -16,12 +17,12 @@ class Home(LoginView):
 def about(req):
     return render(req, 'about.html')
 
-@login_required
-def player_list(req):
-    players = Player.objects.filter(user=req.user)
-    return render(req, 'players/index.html', {'players': players})
-
 # TODO: Will need to amend this once the API has been integrated
+
+@login_required
+def player_detail(req, player_id):
+    player = Player.objects.get(id=player_id)
+    return render(req, 'players/detail.html', {'player': player})
 
 class CreatePlayer(CreateView):
     model = Player
@@ -32,14 +33,9 @@ class CreatePlayer(CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-@login_required
-def player_detail(req, player_id):
-    player = Player.objects.get(id=player_id)
-
-    return render(req, 'players/detail.html', {'player': player})
-
-class PlayerList(ListView):
-    model = Player
+def player_list(req):
+    players = Player.objects.all()
+    return render(req, 'players/player_list.html', {'players': players})
 
 class PlayerUpdate(UpdateView):
     model = Player
@@ -49,6 +45,7 @@ class PlayerDelete(DeleteView):
     model = Player
     success_url = '/players/'
 
+#SECTION: Team Routes
 class TeamCreate(CreateView):
     model = Team
     fields = '__all__'
@@ -67,6 +64,7 @@ class TeamDelete(DeleteView):
     model = Team
     success_url = '/teams/'
 
+#SECTION: signup
 def signup(req):
     error_message = ''
     if req.method == 'POST':
@@ -80,15 +78,3 @@ def signup(req):
     form = UserCreationForm()
     context = {'form': form, 'error_message': error_message }
     return render(req, 'signup.html', context)
-
-class Tournament(ListView):
-    model = Tournament
-
-# TODO: Trial API integration
-# def all_player_data(req):
-#     url = ''
-#     API_KEY = ''
-#     response = requests.get(url)
-#     data = response.json()
-#     return JsonResponse(data)
-

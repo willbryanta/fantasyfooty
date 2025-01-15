@@ -1,15 +1,13 @@
 {% extends 'base.html' %} {% load static %} {% block head %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}" />
-{% endblock %} {% block content %}
-
+{% endblock %} {% block content %} {% if user.is_authenticated %}
 <section class="logo-container">
   <h2>fantasyfooty</h2>
   <div class="nfl-container">
     <img src="" alt="" width="200px" length="auto" />
   </div>
 </section>
-
-{% if not user.is_authenticated %}
+{% else %}
 <section>
   <form action="{% url 'home' %}" method="post" class="login">
     <h1>Login</h1>

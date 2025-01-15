@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.Home.as_view(), name='home'),
-    path('about/', views.about, name='about'), # Change to class-based
+    path('about/', views.about, name='about'),
     path('players/', views.player_list, name='player-list'),
     path('players/<int:player_id>/', views.player_detail, name='player-detail'),
     path('players/create/', views.CreatePlayer.as_view(), name='create-player'),
@@ -15,5 +15,4 @@ urlpatterns = [
     path('teams/<int:pk>/update/', views.TeamUpdate.as_view(), name='team-update'),
     path('teams/<int:pk>/delete/', views.TeamDelete.as_view(), name='team-delete'),
     path('accounts/signup/', views.signup, name='signup'),
-    path('tournament/', views.Tournament.as_view(), name='tournament')
 ]

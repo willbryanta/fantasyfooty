@@ -26,9 +26,8 @@
       <nav>
         <ul>
           {% if user.is_authenticated %}
-          <li><a href="{% url 'player-list' %}">All players</a></li>
-          <li><a href="{% url 'team-list' %}">All Teams</a></li>
-          <li><a href="{% url 'tournament' %}">Tournament</a></li>
+          <li><a href="{% url 'player-list' %}">Players</a></li>
+          <li><a href="{% url 'team-list' %}">Teams</a></li>
           <li><a href="{% url 'create-player' %}">Create a player</a></li>
           <li><a href="{% url 'create-team' %}">Create a team</a></li>
           <li><a href="{% url 'about' %}">About</a></li>

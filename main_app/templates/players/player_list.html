@@ -40,9 +40,17 @@
         <p>A {{ player.team }}</p>
         {% endif %}
       </div>
+      {% if user.is_authenticated %}
+      <form action="" method="post" class="form-container" autocomplete="off">
+        {% csrf_token %}
+        <table>
+          {{ form.as_table }}
+        </table>
+        <button type="submit" class="btn submit">Add</button>
+      </form>
+      {% endif %}
     </a>
   </div>
   {% endfor %}
 </section>
-
 {% endblock %}

@@ -14,18 +14,18 @@ html {
 
 :root {
   font-size: 60%;
-  --nav-bg: rgba(249, 204, 172, 0.7);
-  --nav-bg-ff: rgba(249, 204, 172, 0.9);
-  --borders: #f4a688 solid 2px;
-  --text-color: #f4a688;
-  --link-hover-color: #f9ccac;
-  --button-bg: #fbefcc;
-  --button-bg-hover: #f9e5c3;
-  --submit: #f4a688;
-  --warn: #f9ccac;
-  --danger: #f4a688;
-  --secondary: #f9ccac;
-  --card-box-shadow: 5px 5px 6px -1px #aaa;
+  --nav-bg: rgba(72, 209, 204, 0.7);
+  --nav-bg-ff: rgba(72, 209, 204, 0.9);
+  --borders: #40e0d0 solid 2px;
+  --text-color: #007f7f;
+  --link-hover-color: #20b2aa;
+  --button-bg: #e0ffff;
+  --button-bg-hover: #afeeee;
+  --submit: #40e0d0;
+  --warn: #00ced1;
+  --danger: #007f7f;
+  --secondary: #20b2aa;
+  --card-box-shadow: 5px 5px 6px -1px rgba(0, 128, 128, 0.5);
   --font-xtreme: 4.2rem;
   --font-xxl: 3.6rem;
   --font-xl: 2.4rem;
