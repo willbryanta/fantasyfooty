@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% block content %}
+<h1>My Fantasy Team</h1>
+
+<section class="card-container">
+  {% for player in players %}
+  <div class="card">
+    <div class="card-content">
+      <div class="card-img-container">
+        <img
+          src="{{ player.headshotURL }}"
+          alt="{{ player.name }}"
+          width="200px"
+        />
+      </div>
+      <h2 class="card-title">{{ player.name }}</h2>
+      <p>Position: {{ player.position }}</p>
+      <p>Team: {{ player.team.name }}</p>
+      <p>Age: {{ player.age }}</p>
+    </div>
+  </div>
+  {% empty %}
+  <p>You have no players in your fantasy team yet.</p>
+  {% endfor %}
+</section>
+{% endblock %}

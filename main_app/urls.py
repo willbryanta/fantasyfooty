@@ -9,6 +9,7 @@ urlpatterns = [
     path('players/create/', views.CreatePlayer.as_view(), name='create-player'),
     path('players/<int:pk>/update/', views.PlayerUpdate.as_view(), name='player-update'),
     path('players/<int:pk>/delete/', views.PlayerDelete.as_view(), name='player-delete'),
+    path('my-team/', views.my_team_list, name='my-team'),
     path('teams/create/', views.TeamCreate.as_view(), name='create-team'),
     path('teams/<int:pk>/', views.TeamDetail.as_view(), name='team-detail'),
     path('teams/', views.TeamList.as_view(), name='team-list'),

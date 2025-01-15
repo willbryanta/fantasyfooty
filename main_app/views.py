@@ -70,8 +70,14 @@ def add_player_to_fantasy_team(req, player_id):
     fantasy_team, created = FantasyTeam.objects.get_or_create(user=req.user)
     if player not in fantasy_team.players.all():
         fantasy_team.players.add(player)
-        return render(req, 'team/team.html',{"fantasy_team": fantasy_team.players })
-    return render(req, 'team/team.html',{"fantasy_team": fantasy_team.players})
+        return render(req, 'team/team_list.html',{"fantasy_team": fantasy_team.players })
+    return render(req, 'team/team_list.html',{"fantasy_team": fantasy_team.players})
+
+@login_required
+def my_team_list(req):
+    fantasy_team, created = FantasyTeam.objects.get_or_create(user=req.user)
+    players = fantasy_team.players.all()
+    return render(req, 'team/team_list.html', {'players': players })
 
 #SECTION: signup
 def signup(req):
