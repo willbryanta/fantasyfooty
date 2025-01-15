@@ -27,18 +27,6 @@ class Player(models.Model):
 
     def get_absolute_url(self):
         return reverse("player-detail", kwargs={"player_id": self.id})
-    
-# TODO: Discuss further, may not need an owner model
-class Owner(models.Model):
-    name = models.CharField(max_length=30)
-    email = models.EmailField(max_length=30)
-    username = models.CharField(max_length=30)
-
-    def __str__(self):
-        return self.name
-    
-    def get_absolute_url(self):
-        return reverse("owner-detail", kwargs={"pk": self.id})
 
 COLORS = (
     ('Bl', 'Black'),
@@ -52,6 +40,8 @@ COLORS = (
     ('I', 'Indigo'),
     ('V', 'Violet')
 )
+
+# This is the team the players actually play for
 class Team(models.Model):
     name = models.CharField(max_length=20)
     state = models.CharField(max_length=30)
@@ -63,6 +53,17 @@ class Team(models.Model):
     def get_absolute_url(self):
         return reverse("team-detail", kwargs={"pk": self.id})
 
+# This is the fantasy team created and owned by a user, which should consist of players
+# class FantasyTeam(models.Model):
+#     name = models.CharField(max_length=30)
+#     players = models.ArrayField([models.ForeignKey(Player, on_delete=models.CASCADE)])
+
+#     def __str__(self):
+#         return f'{self.name}'
+
 class Tournament(models.Model):
     name = models.CharField(max_length=30)
     teams = models.ForeignKey(Team, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.name}'

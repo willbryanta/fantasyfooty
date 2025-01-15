@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.views import LoginView
-from .models import Player, Owner, Team
+from .models import Player, Team, Tournament
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
+from django.http import JsonResponse
+import requests
 
 class Home(LoginView):
     template_name = 'home.html'
@@ -78,3 +80,15 @@ def signup(req):
     form = UserCreationForm()
     context = {'form': form, 'error_message': error_message }
     return render(req, 'signup.html', context)
+
+class Tournament(ListView):
+    model = Tournament
+
+# TODO: Trial API integration
+# def all_player_data(req):
+#     url = ''
+#     API_KEY = ''
+#     response = requests.get(url)
+#     data = response.json()
+#     return JsonResponse(data)
+
