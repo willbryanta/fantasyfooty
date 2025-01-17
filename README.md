@@ -1,6 +1,6 @@
 # fantasyfooty
 
-![Screenshot of application](images/logo.png)
+![Screenshot of application](main_app/static/images/logo.png)
 
 ## Home Page
 
