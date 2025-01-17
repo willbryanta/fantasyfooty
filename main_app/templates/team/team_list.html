@@ -1,4 +1,7 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}{% load static %} {% block head %}
+<link rel="stylesheet" href="{% static 'css/teams/my-team-index.css' %}" />
+{% endblock %} {% block content %}
+
 <h1>My Fantasy Team</h1>
 
 <section class="card-container">
