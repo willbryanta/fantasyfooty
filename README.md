@@ -37,7 +37,7 @@ Check out our User Stories, Stretch Goals, Entity Relationship diagrams and wire
 
 Planned enhancements for future development (Stretch Goals):
 
-- Integrate NFL information API to extract player information
+- Integrate NFL information API to extract player information (remove player and team CRUD functionality)
 - Integrate real-time information based on player performance
 - Develop tournament model and enable player v player functionality
 
