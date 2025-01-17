@@ -73,6 +73,14 @@ def add_player_to_fantasy_team(req, player_id):
         return render(req, 'team/team_list.html',{"fantasy_team": fantasy_team.players })
     return render(req, 'team/team_list.html',{"fantasy_team": fantasy_team.players})
 
+def remove_player_from_fantasy_team(req, player_id):
+    player = get_object_or_404(Player, id=player_id)
+    fantasy_team = FantasyTeam.objects.get(user=req.user)
+    if player in fantasy_team.players.all():
+        fantasy_team.players.remove(player)
+        return render(req, 'team/team_list.html',{"fantasy_team": fantasy_team.players })
+    return render(req, 'team/team_list.html',{"fantasy_team": fantasy_team.players})
+        
 @login_required
 def my_team_list(req):
     fantasy_team, created = FantasyTeam.objects.get_or_create(user=req.user)

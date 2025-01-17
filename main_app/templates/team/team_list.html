@@ -17,6 +17,20 @@
       <p>Team: {{ player.team.name }}</p>
       <p>Age: {{ player.age }}</p>
     </div>
+    {% if user.is_authenticated %}
+    <form
+      action="{% url 'remove-player-from-team' player.id %}"
+      method="post"
+      class="form-container"
+      autocomplete="off"
+    >
+      {% csrf_token %}
+      <table>
+        {{ form.as_table }}
+      </table>
+      <button type="submit" class="btn submit">Remove</button>
+    </form>
+    {% endif %}
   </div>
   {% empty %}
   <p>You have no players in your fantasy team yet.</p>
