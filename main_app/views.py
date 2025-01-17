@@ -22,7 +22,7 @@ def player_detail(req, player_id):
     player = Player.objects.get(id=player_id)
     return render(req, 'players/detail.html', {'player': player})
 
-class CreatePlayer(CreateView):
+class CreatePlayer(LoginRequiredMixin, CreateView):
     model = Player
     fields = '__all__'
     success_url = '/players/'
@@ -36,16 +36,16 @@ def player_list(req):
     players = Player.objects.all()
     return render(req, 'players/player_list.html', {'players': players})
 
-class PlayerUpdate(UpdateView):
+class PlayerUpdate(LoginRequiredMixin, UpdateView):
     model = Player
     fields = ['name', 'age', 'team', 'position']
 
-class PlayerDelete(DeleteView):
+class PlayerDelete(LoginRequiredMixin, DeleteView):
     model = Player
     success_url = '/players/'
 
 #SECTION: Team Routes
-class TeamCreate(CreateView):
+class TeamCreate(LoginRequiredMixin, CreateView):
     model = Team
     fields = '__all__'
 
@@ -55,15 +55,15 @@ class TeamList(ListView):
 class TeamDetail(DetailView):
     model = Team
 
-class TeamUpdate(UpdateView):
+class TeamUpdate(LoginRequiredMixin, UpdateView):
     model = Team
     fields = '__all__'
 
-class TeamDelete(DeleteView):
+class TeamDelete(LoginRequiredMixin, DeleteView):
     model = Team
     success_url = '/teams/'
 
-#SECTION: 
+#SECTION:
 @login_required
 def add_player_to_fantasy_team(req, player_id):
     player = get_object_or_404(Player, id=player_id)
