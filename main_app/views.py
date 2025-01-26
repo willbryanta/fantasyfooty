@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
 from django.http import JsonResponse
+import requests
+import http.client
 
 #SECTION: Intro templates
 class Home(LoginView):
@@ -18,9 +20,22 @@ def about(req):
 
 #SECTION: Player routes
 @login_required
-def player_detail(req, player_id):
+def player_detail(request, player_id):
     player = Player.objects.get(id=player_id)
-    return render(req, 'players/detail.html', {'player': player})
+
+    conn = http.client.HTTPSConnection("nfl-api-data.p.rapidapi.com")
+
+    headers = {
+    'x-rapidapi-key': "8fc35cf562mshe19dd7988877635p1e3666jsn91cdc8a086f2",
+    'x-rapidapi-host': "nfl-api-data.p.rapidapi.com"
+    }
+
+    conn.request("GET", "/nfl-player-listing/v1/data?id=22", headers=headers)
+
+    res = conn.getresponse()
+    data = res.read()
+
+    return render(request, 'players/detail.html', {'player': player, 'api': data})
 
 class CreatePlayer(LoginRequiredMixin, CreateView):
     model = Player
