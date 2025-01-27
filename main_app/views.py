@@ -7,8 +7,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
 from django.http import JsonResponse
+from .services.api_service import fetch_player_data
+
 import requests
 import http.client
+
 
 #SECTION: Intro templates
 class Home(LoginView):
@@ -23,19 +26,7 @@ def about(req):
 def player_detail(request, player_id):
     player = Player.objects.get(id=player_id)
 
-    conn = http.client.HTTPSConnection("nfl-api-data.p.rapidapi.com")
-
-    headers = {
-    'x-rapidapi-key': "8fc35cf562mshe19dd7988877635p1e3666jsn91cdc8a086f2",
-    'x-rapidapi-host': "nfl-api-data.p.rapidapi.com"
-    }
-
-    conn.request("GET", "/nfl-player-listing/v1/data?id=22", headers=headers)
-
-    res = conn.getresponse()
-    data = res.read()
-
-    return render(request, 'players/detail.html', {'player': player, 'api': data})
+    return render(request, 'players/detail.html', {'player': player})
 
 class CreatePlayer(LoginRequiredMixin, CreateView):
     model = Player
@@ -46,10 +37,21 @@ class CreatePlayer(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+# @login_required
+# def player_list(req):
+#     players = Player.objects.all()
+#     return render(req, 'players/player_list.html', {'players': players})
+
 @login_required
-def player_list(req):
-    players = Player.objects.all()
-    return render(req, 'players/player_list.html', {'players': players})
+def player_list(request):
+    try:
+        api_data = fetch_player_data(api_id=22)
+        players = api_data.get("players", [])
+    except Exception as e:
+        players = []
+        print(f"Error fetching player data: {e}")
+    
+    return render(request, 'players/player_list.html', {'players': players})
 
 class PlayerUpdate(LoginRequiredMixin, UpdateView):
     model = Player

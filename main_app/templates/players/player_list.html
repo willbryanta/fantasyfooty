@@ -38,6 +38,7 @@
         <p>Team: {{ player.team }}</p>
         {% else %}
         <p>A {{ player.team }}</p>
+        <p>{{ players }}</p>
         {% endif %}
       </div>
       {% if user.is_authenticated %}
