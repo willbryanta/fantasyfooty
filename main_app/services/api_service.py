@@ -20,6 +20,6 @@ def fetch_player_data(api_id):
         raise Exception(f"API request failed with status {response.status}")
     
     data = response.read()
-
-    print(json.loads(data))
-    return json.loads(data)
+    player_data = data.decode('utf-8')
+    
+    return json.loads(player_data)

@@ -21,7 +21,9 @@
 <section class="card-container">
   {% for player in players %}
   <div class="card">
+    {% comment %}
     <a href="{% url 'player-detail' player.id %}">
+      {% endcomment %}
       <div class="card-content">
         <div class="card-img-container">
           <img
@@ -42,20 +44,21 @@
         {% endif %}
       </div>
       {% if user.is_authenticated %}
-      <form
+      {% comment %} <form
         action="{% url 'add-player-to-team' player.id %}"
         method="post"
         class="form-container"
         autocomplete="off"
-      >
+      > {% endcomment %}
         {% csrf_token %}
         <table>
           {{ form.as_table }}
         </table>
         <button type="submit" class="btn submit">Add to my team</button>
       </form>
-      {% endif %}
+      {% endif %} {% comment %}
     </a>
+    {% endcomment %}
   </div>
   {% endfor %}
 </section>
