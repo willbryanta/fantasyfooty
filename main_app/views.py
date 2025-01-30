@@ -46,16 +46,10 @@ class CreatePlayer(LoginRequiredMixin, CreateView):
 def player_list(request):
     try:
         api_data = fetch_player_data(api_id=22)
-
-        players = api_data.get('athletes',[])
-
-        print(players)
-
-
-        if not isinstance(players, list):
-            players = []
+        players = api_data.get('athletes',[])[0]
 
         print(players)
+
     except Exception as e:
         players = []
         print(f"Error fetching player data: {e}")

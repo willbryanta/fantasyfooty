@@ -1,8 +1,13 @@
+from dotenv import load_dotenv
+import os
 import http.client
 import json
 
-API_HOST="nfl-api-data.p.rapidapi.com"
-API_KEY="8fc35cf562mshe19dd7988877635p1e3666jsn91cdc8a086f2"
+load_dotenv()
+
+API_HOST = os.getenv("API_HOST")
+API_KEY = os.getenv("API_KEY")
+
 
 def fetch_player_data(api_id):
 
