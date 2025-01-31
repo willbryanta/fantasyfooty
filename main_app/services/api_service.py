@@ -28,3 +28,22 @@ def fetch_player_data(api_id):
     player_data = data.decode('utf-8')
     
     return json.loads(player_data)
+
+def fetch_team_data(api_id):
+
+    conn = http.client.HTTPSConnection(API_HOST)
+
+    headers = {
+    'x-rapidapi-key': API_KEY,
+    'x-rapidapi-host': API_HOST
+    }
+
+    endpoint = "/nfl-team-listing/v1/data"
+
+    conn.request("GET", endpoint, headers=headers)
+
+    response = conn.getresponse()
+    data = response.read()
+    team_data = data.decode("utf-8")
+
+    return json.loads(team_data)

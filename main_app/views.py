@@ -46,7 +46,7 @@ class CreatePlayer(LoginRequiredMixin, CreateView):
 def player_list(request):
     try:
         api_data = fetch_player_data(api_id=22)
-        players = api_data.get('athletes',[])[0]
+        players = api_data.get('athletes',[])[0]['items']
 
         print(players)
 
@@ -71,6 +71,8 @@ class TeamCreate(LoginRequiredMixin, CreateView):
 
 class TeamList(ListView):
     model = Team
+
+    
 
 class TeamDetail(DetailView):
     model = Team
