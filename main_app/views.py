@@ -72,8 +72,6 @@ class TeamCreate(LoginRequiredMixin, CreateView):
 class TeamList(ListView):
     model = Team
 
-    
-
 class TeamDetail(DetailView):
     model = Team
 
