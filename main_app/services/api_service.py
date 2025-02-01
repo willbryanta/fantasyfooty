@@ -32,6 +32,6 @@ def fetch_player_data(api_id):
 
     return get_api_connection_from_endpoint(f"/nfl-player-listing/v1/data?id={api_id}")
 
-def fetch_team_data(api_id):
+def fetch_team_data():
 
     return get_api_connection_from_endpoint("/nfl-team-listing/v1/data")

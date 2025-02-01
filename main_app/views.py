@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
 from django.http import JsonResponse
-from .services.api_service import fetch_player_data
+from .services.api_service import fetch_player_data, fetch_team_data
 
 import requests
 import http.client
@@ -37,18 +37,13 @@ class CreatePlayer(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-# @login_required
-# def player_list(req):
-#     players = Player.objects.all()
-#     return render(req, 'players/player_list.html', {'players': players})
-
 @login_required
 def player_list(request):
     try:
         api_data = fetch_player_data(api_id=22)
-        players = api_data.get('athletes',[])[0]['items']
+        players = api_data.get('athletes',[])
 
-        print(players)
+        print(players[0])
 
     except Exception as e:
         players = []
@@ -71,6 +66,19 @@ class TeamCreate(LoginRequiredMixin, CreateView):
 
 class TeamList(ListView):
     model = Team
+    template_name = 'team_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            api_data = fetch_team_data()
+            context['teams'] = api_data[0]['team']
+            print(context['teams'])
+        except Exception as e:
+            context['teams'] = []
+            print(f"Error fetching team data: {e}")
+        return context
+    
 
 class TeamDetail(DetailView):
     model = Team
@@ -105,7 +113,7 @@ def remove_player_from_fantasy_team(req, player_id):
 def my_team_list(req):
     fantasy_team, created = FantasyTeam.objects.get_or_create(user=req.user)
     players = fantasy_team.players.all()
-    return render(req, 'team/team_list.html', {'players': players })
+    return render(req, 'team/my_team_list.html', {'players': players })
 
 #SECTION: signup
 def signup(req):
