@@ -2,7 +2,6 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 
-# TODO: Delete once API integration is done
 class Player(models.Model):
     name = models.CharField(max_length=50)
     age = models.IntegerField()
@@ -18,24 +17,13 @@ class Player(models.Model):
     def get_absolute_url(self):
         return reverse("player-detail", kwargs={"player_id": self.id})
 
-COLORS = (
-    ('Bl', 'Black'),
-    ('W', 'White'),
-    ('Gr', 'Grey'),
-    ('R', 'Red'),
-    ('O', 'Orange'),
-    ('Y', 'Yellow'),
-    ('G', 'Green'),
-    ('B', 'Blue'),
-    ('I', 'Indigo'),
-    ('V', 'Violet')
-)
-
-# TODO: Delete once API integration is done
 class Team(models.Model):
-    name = models.CharField(max_length=20)
-    state = models.CharField(max_length=30)
-    colors = models.CharField(max_length=2, choices=COLORS, default=COLORS[0][0])
+    displayName = models.CharField(max_length=50)
+    abbreviation = models.CharField(max_length=5)
+    location = models.CharField(max_length=30)
+    color = models.Charfield(max_length=30)
+    alternate_color = models.Charfield(max_length=20)
+    logo = models.models.URLField(max_length=200)
 
     def __str__(self):
         return f'{self.name} ({self.get_colors_display()} from {self.state})'
