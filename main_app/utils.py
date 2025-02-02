@@ -6,6 +6,7 @@ def save_teams_to_db():
         api_data = fetch_team_data()
         teams = api_data.get('teams', [])
 
+        # TODO: ensure the field names map correctly
         for team in teams:
             team_obj, created = Teams.objects.update_or_create(
                 api_id=team['id'],
