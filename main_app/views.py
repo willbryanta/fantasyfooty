@@ -15,27 +15,40 @@ import http.client
 
 #SECTION: Intro templates
 class Home(LoginView):
-    template_name = 'home.html'
+    try:
+        template_name = 'home.html'
+    except Exception as e:
+        return print(f"Error loading home page: {e}")
 
 # Change to class-based
 def about(req):
-    return render(req, 'about.html')
+    try:
+        return render(req, 'about.html')
+    except Exception as e:
+        return print(f"Error loading about page: {e}")
 
 #SECTION: Player routes
 @login_required
 def player_detail(request, player_id):
-    player = Player.objects.get(id=player_id)
+    try:
+        player_details = Player.objects.get(id=player_id)
+        return render(request, 'players/detail.html', {'player': player})
+    except Exception as e:
+        context['players'] = []
+        return print(f"Error loading player details: {e}")
 
-    return render(request, 'players/detail.html', {'player': player})
 
 class CreatePlayer(LoginRequiredMixin, CreateView):
     model = Player
     fields = '__all__'
     success_url = '/players/'
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+    try:
+        def form_valid(self, form):
+            form.instance.user = self.request.user
+            return super().form_valid(form)
+    except Exception as e:
+        return print(f"Error creating player: {e}")
 
 @login_required
 def player_list(request):
@@ -96,36 +109,51 @@ class TeamDelete(LoginRequiredMixin, DeleteView):
 def add_player_to_fantasy_team(req, player_id):
     player = get_object_or_404(Player, id=player_id)
     fantasy_team, created = FantasyTeam.objects.get_or_create(user=req.user)
-    if player not in fantasy_team.players.all():
-        fantasy_team.players.add(player)
-        return render(req, 'team/team_list.html',{"fantasy_team": fantasy_team.players })
-    return render(req, 'team/team_list.html',{"fantasy_team": fantasy_team.players})
+
+    try:
+        if player not in fantasy_team.players.all():
+            fantasy_team.players.add(player)
+            return render(req, 'team/team_list.html',{"fantasy_team": fantasy_team.players })
+        return render(req, 'team/team_list.html',{"fantasy_team": fantasy_team.players})
+    except Exception as e:
+        return print(f"Error adding player with id: {player_id} to your team")
 
 def remove_player_from_fantasy_team(req, player_id):
     player = get_object_or_404(Player, id=player_id)
     fantasy_team = FantasyTeam.objects.get(user=req.user)
-    if player in fantasy_team.players.all():
-        fantasy_team.players.remove(player)
-        return render(req, 'team/team_list.html',{"fantasy_team": fantasy_team.players })
-    return render(req, 'team/team_list.html',{"fantasy_team": fantasy_team.players})
+
+    try:
+        if player in fantasy_team.players.all():
+            fantasy_team.players.remove(player)
+            return render(req, 'team/team_list.html',{"fantasy_team": fantasy_team.players })
+        return render(req, 'team/team_list.html',{"fantasy_team": fantasy_team.players})
+    except Exception as e:
+        return print(f"Error removing player with id: {player_id} from your team")
         
 @login_required
 def my_team_list(req):
     fantasy_team, created = FantasyTeam.objects.get_or_create(user=req.user)
     players = fantasy_team.players.all()
-    return render(req, 'team/my_team_list.html', {'players': players })
+    try:
+        return render(req, 'team/my_team_list.html', {'players': players })
+    except Exception as e:
+        return print(f"Error fetching your team list: {e}")
 
 #SECTION: signup
 def signup(req):
     error_message = ''
-    if req.method == 'POST':
-        form = UserCreationForm(req.POST)
-        if form.is_valid():
-            user = form.save()
-            login(req, user)
-            return redirect('home')
-        else:
-            error_message = 'Invalid sign up - try again'
-    form = UserCreationForm()
-    context = {'form': form, 'error_message': error_message }
-    return render(req, 'signup.html', context)
+
+    try:
+        if req.method == 'POST':
+            form = UserCreationForm(req.POST)
+            if form.is_valid():
+                user = form.save()
+                login(req, user)
+                return redirect('home')
+            else:
+                error_message = 'Invalid sign up - try again'
+        form = UserCreationForm()
+        context = {'form': form, 'error_message': error_message }
+        return render(req, 'signup.html', context)
+    except Exception as e:
+        return print(f"Error signing up: {e}")
