@@ -18,7 +18,7 @@ class Home(LoginView):
     try:
         template_name = 'home.html'
     except Exception as e:
-        return print(f"Error loading home page: {e}")
+        print(f"Error loading home page: {e}")
 
 # Change to class-based
 def about(req):
@@ -48,7 +48,7 @@ class CreatePlayer(LoginRequiredMixin, CreateView):
             form.instance.user = self.request.user
             return super().form_valid(form)
     except Exception as e:
-        return print(f"Error creating player: {e}")
+        print(f"Error creating player: {e}")
 
 @login_required
 def player_list(request):

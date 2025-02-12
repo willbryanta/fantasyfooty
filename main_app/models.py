@@ -21,9 +21,9 @@ class Team(models.Model):
     displayName = models.CharField(max_length=50)
     abbreviation = models.CharField(max_length=5)
     location = models.CharField(max_length=30)
-    color = models.Charfield(max_length=30)
-    alternate_color = models.Charfield(max_length=20)
-    logo = models.models.URLField(max_length=200)
+    color = models.CharField(max_length=30)
+    alternate_color = models.CharField(max_length=20)
+    logo = models.URLField(max_length=200)
 
     def __str__(self):
         return f'{self.name} ({self.get_colors_display()} from {self.state})'
