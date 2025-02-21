@@ -38,3 +38,10 @@ class FantasyTeam(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s Fantasy Team"
+
+class Tournament(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    team = models.ForeignKey(FantasyTeam, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
